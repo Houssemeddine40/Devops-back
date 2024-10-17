@@ -27,7 +27,7 @@ import com.esprit.examen.repositories.FournisseurRepository;
 import com.esprit.examen.repositories.OperateurRepository;
 import com.esprit.examen.repositories.ProduitRepository;
 
-public class FactureServiceImplTest {
+class FactureServiceImplTest {
 
     @InjectMocks
     FactureServiceImpl factureService;
@@ -51,20 +51,20 @@ public class FactureServiceImplTest {
     ReglementServiceImpl reglementService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testRetrieveAllFactures() {
+    void testRetrieveAllFactures() {
         List<Facture> factures = new ArrayList<>();
         Facture facture1 = new Facture();
-        facture1.setIdFacture(1L); // Set attributes after object creation
+        facture1.setIdFacture(1L);
         facture1.setMontantRemise(50.0f);
         facture1.setMontantFacture(1000.0f);
 
         Facture facture2 = new Facture();
-        facture2.setIdFacture(2L); // Set attributes after object creation
+        facture2.setIdFacture(2L);
         facture2.setMontantRemise(75.0f);
         facture2.setMontantFacture(1500.0f);
 
@@ -79,9 +79,9 @@ public class FactureServiceImplTest {
     }
 
     @Test
-    public void testAddFacture() {
+    void testAddFacture() {
         Facture facture = new Facture();
-        facture.setIdFacture(1L);  // Set attributes after creation
+        facture.setIdFacture(1L);
         facture.setMontantRemise(50.0f);
         facture.setMontantFacture(1000.0f);
         facture.setDateCreationFacture(new Date());
@@ -95,19 +95,19 @@ public class FactureServiceImplTest {
     }
 
     @Test
-    public void testAddDetailsFacture() {
+    void testAddDetailsFacture() {
         Facture facture = new Facture();
-        facture.setIdFacture(1L);  // Set attributes after creation
+        facture.setIdFacture(1L);
         facture.setMontantFacture(1000.0f);
         facture.setMontantRemise(50.0f);
 
         DetailFacture detailFacture = new DetailFacture();
-        detailFacture.setIdDetailFacture(1L);  // Set attributes after creation
+        detailFacture.setIdDetailFacture(1L);
         detailFacture.setQteCommandee(5);
         detailFacture.setPourcentageRemise(10);
 
         Produit produit = new Produit();
-        produit.setIdProduit(1L);  // Set attributes after creation
+        produit.setIdProduit(1L);
         produit.setPrix(100.0f);
 
         detailFacture.setProduit(produit);
@@ -127,9 +127,9 @@ public class FactureServiceImplTest {
     }
 
     @Test
-    public void testCancelFacture() {
+    void testCancelFacture() {
         Facture facture = new Facture();
-        facture.setIdFacture(1L);  // Set attributes after creation
+        facture.setIdFacture(1L);
         facture.setArchivee(false);
 
         when(factureRepository.findById(1L)).thenReturn(Optional.of(facture));
@@ -142,9 +142,9 @@ public class FactureServiceImplTest {
     }
 
     @Test
-    public void testRetrieveFacture() {
+    void testRetrieveFacture() {
         Facture facture = new Facture();
-        facture.setIdFacture(1L);  // Set attributes after creation
+        facture.setIdFacture(1L);
 
         when(factureRepository.findById(1L)).thenReturn(Optional.of(facture));
 
@@ -154,63 +154,45 @@ public class FactureServiceImplTest {
     }
 
     @Test
-    public void testGetFacturesByFournisseur() {
-        // Create a Fournisseur object
+    void testGetFacturesByFournisseur() {
         Fournisseur fournisseur = new Fournisseur();
-        fournisseur.setIdFournisseur(1L);  // Set attributes after creation
+        fournisseur.setIdFournisseur(1L);
 
-        // Create a Facture object
         Facture facture = new Facture();
-        facture.setIdFacture(1L);  // Set attributes after creation
+        facture.setIdFacture(1L);
 
-        // Add Facture to Fournisseur's set of Factures
         Set<Facture> factures = new HashSet<>();
         factures.add(facture);
         fournisseur.setFactures(factures);
 
-        // Mock the repository call to return the Fournisseur with the factures
         when(fournisseurRepository.findById(1L)).thenReturn(Optional.of(fournisseur));
 
-        // Call the service method and convert the Set to a List
         List<Facture> result = factureService.getFacturesByFournisseur(1L);
 
-        // Assert that the returned list has the expected size
         assertEquals(1, result.size());
-
-        // Verify the repository interaction
         verify(fournisseurRepository, times(1)).findById(1L);
     }
 
-
-
     @Test
-    public void testAssignOperateurToFacture() {
-        // Create and initialize Operateur object
+    void testAssignOperateurToFacture() {
         Operateur operateur = new Operateur();
-        operateur.setIdOperateur(1L);  // Set attributes after creation
+        operateur.setIdOperateur(1L);
         operateur.setNom("Operateur1");
 
-        // Create and initialize Facture object
         Facture facture = new Facture();
-        facture.setIdFacture(1L);  // Set attributes after creation
+        facture.setIdFacture(1L);
 
-        // Mock the repository calls to return the initialized Operateur and Facture
         when(operateurRepository.findById(1L)).thenReturn(Optional.of(operateur));
         when(factureRepository.findById(1L)).thenReturn(Optional.of(facture));
 
-        // Call the method being tested
         factureService.assignOperateurToFacture(1L, 1L);
 
-        // Ensure that the Facture was added to the Operateur's factures set
         assertEquals(1, operateur.getFactures().size());
-
-        // Verify that the Operateur was saved after being modified
         verify(operateurRepository, times(1)).save(operateur);
     }
 
-
     @Test
-    public void testPourcentageRecouvrement() {
+    void testPourcentageRecouvrement() {
         Date startDate = new Date();
         Date endDate = new Date();
 
