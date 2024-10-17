@@ -1,6 +1,7 @@
 package com.esprit.examen.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -37,8 +38,8 @@ public class Fournisseur implements Serializable {
 	private CategorieFournisseur  categorieFournisseur;
 	@OneToMany(mappedBy="fournisseur")
 	@JsonIgnore
-	private Set<Facture> factures;
-    @ManyToMany
+	private Set<Facture> factures = new HashSet<>();
+	@ManyToMany
     @JsonIgnore
     private Set<SecteurActivite> secteurActivites;
     @OneToOne(cascade= CascadeType.ALL,fetch=FetchType.EAGER)

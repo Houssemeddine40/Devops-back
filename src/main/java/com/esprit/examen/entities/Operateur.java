@@ -1,6 +1,7 @@
 package com.esprit.examen.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -33,6 +34,6 @@ public class Operateur implements Serializable{
 	private String password;
 	@OneToMany
 	@JsonIgnore
-	private Set<Facture> factures;
+	private Set<Facture> factures = new HashSet<>();
 	
 }
