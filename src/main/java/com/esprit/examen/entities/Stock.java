@@ -1,6 +1,7 @@
 package com.esprit.examen.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Stock implements Serializable {
 	private Integer qteMin;
 	@OneToMany(mappedBy = "stock")
 	@JsonIgnore
-	private Set<Produit> produits;
+	private Set<Produit> produits = new HashSet<Produit>() ;
 	public Stock(String libelleStock, Integer qte, Integer qteMin) {
 		super();
 		this.libelleStock = libelleStock;
