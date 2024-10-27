@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Service pour l'application Spring Boot
   tpachat-backend:
-    image: houssemeddine40/tpachatproject-app:latest  # Use the pushed image
+    image: houssemeddine40/tpachatproject-app:33  # Use the pushed image
     ports:
       - "8089:8082"  # Expose port 8082 for the application (mapped to host port 8089)
     depends_on:
