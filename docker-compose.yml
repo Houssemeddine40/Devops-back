@@ -3,13 +3,14 @@ version: '3.8'
 services:
   # Service pour l'application Spring Boot
   tpachat-backend:
-    image: houssemeddine40/tpachatproject-app:41  # Use the pushed image
+    image: houssemeddine40/tpachatproject-app:33  # Use the pushed image
     ports:
       - "8089:8089"
     depends_on:
-      - mysql-db  # Ensure that MySQL starts before the backend
+      mysql-db:
+        condition: service_healthy  # Wait for MySQL to be healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tpachato?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tpachato?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
     networks:
@@ -27,6 +28,11 @@ services:
       - mysql_data:/var/lib/mysql  # Persist MySQL data
     networks:
       - my-network  # Specify the network
+    healthcheck:  # Add health check for MySQL
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
 
 volumes:
   mysql_data:
