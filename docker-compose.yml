@@ -5,7 +5,7 @@ services:
   tpachat-backend:
     image: houssemeddine40/tpachatproject-app:33  # Use the pushed image
     ports:
-      - "8089:8082"  # Expose port 8082 for the application (mapped to host port 8089)
+      - "8089:8089"  # Expose port 8082 for the application (mapped to host port 8089)
     depends_on:
       - mysql-db  # Ensure that MySQL starts before the backend
     environment:
