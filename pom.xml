@@ -119,7 +119,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>5DS4-tpAchatProject</finalName>
 	</build>
 
 
