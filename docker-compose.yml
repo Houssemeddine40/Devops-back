@@ -12,6 +12,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tpachato?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
+    networks:
+      - my-network  # Specify the network
 
   # Service pour la base de données MySQL
   mysql-db:
@@ -23,6 +25,11 @@ services:
       - "3306:3306"  # Expose MySQL port
     volumes:
       - mysql_data:/var/lib/mysql  # Persist MySQL data
+    networks:
+      - my-network  # Specify the network
 
 volumes:
   mysql_data:
+
+networks:
+  my-network:  # Define the custom network
