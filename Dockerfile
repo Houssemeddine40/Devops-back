@@ -2,7 +2,7 @@
 FROM openjdk:17-jdk-slim
 
 # Expose le port 8082 pour votre application Spring Boot
-EXPOSE 8082
+EXPOSE 8089
 
 # Variables pour Nexus (à adapter selon votre configuration)
 ARG NEXUS_URL=http://192.168.109.129:8081
