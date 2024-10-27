@@ -1,28 +1,28 @@
 version: '3.8'
 
 services:
-  # Service for the Spring Boot application
+  # Service pour l'application Spring Boot
   tpachat-backend:
-    image: houssemeddine40/tpachatproject-app:latest  # Use the Docker Hub image
+    image: houssemeddine40/tpachatproject-app:latest  # Use the pushed image
     ports:
-      - "8089:8089"  # Expose port 8089 for the application
+      - "8089:8082"  # Expose port 8082 for the application (mapped to host port 8089)
     depends_on:
-      - mysql-db  # Ensure MySQL starts before the backend
+      - mysql-db  # Ensure that MySQL starts before the backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tpachato?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: rootpassword  # Change as necessary
+      SPRING_DATASOURCE_PASSWORD: rootpassword
 
-  # Service for the MySQL database
+  # Service pour la base de données MySQL
   mysql-db:
-    image: mysql:5.7  # Use MySQL 5.7 or another compatible version
+    image: mysql:5.7  # Use MySQL 5.7
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword  # Set the MySQL root password
-      MYSQL_DATABASE: tpachato  # Name of the database
+      MYSQL_ROOT_PASSWORD: rootpassword  # Set MySQL root password
+      MYSQL_DATABASE: tpachato  # Database name
     ports:
-      - "3306:3306"  # Expose port 3306 for local access if necessary
+      - "3306:3306"  # Expose MySQL port
     volumes:
       - mysql_data:/var/lib/mysql  # Persist MySQL data
 
 volumes:
-  mysql_data:  # Define a volume for MySQL data persistence
+  mysql_data:
