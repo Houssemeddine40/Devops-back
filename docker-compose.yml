@@ -36,7 +36,7 @@ services:
 
   # Service for the Angular frontend application
   angular-frontend:
-    image: houssemeddine40/angular-app:2
+    image: houssemeddine40/angular-app:3
     ports:
       - "4200:80"  # Expose Angular app on port 4200 (maps to port 80 in the container where Nginx serves it)
     depends_on:
