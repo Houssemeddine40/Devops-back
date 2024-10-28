@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # Service pour l'application Spring Boot
+  # Service for the Spring Boot application
   tpachat-backend:
     image: houssemeddine40/tpachatproject-app:41  # Use the pushed image
     ports:
@@ -16,7 +16,7 @@ services:
     networks:
       - my-network  # Specify the network
 
-  # Service pour la base de données MySQL
+  # Service for the MySQL database
   mysql-db:
     image: mysql:5.7  # Use MySQL 5.7
     environment:
@@ -33,6 +33,16 @@ services:
       interval: 5s
       timeout: 10s
       retries: 5
+
+  # Service for the Angular frontend application
+  angular-frontend:
+    image: houssemeddine40/angular-app:latest
+    ports:
+      - "4200:80"  # Expose Angular app on port 4200 (maps to port 80 in the container where Nginx serves it)
+    depends_on:
+      - tpachat-backend  # Ensure the backend is running
+    networks:
+      - my-network
 
 volumes:
   mysql_data:
