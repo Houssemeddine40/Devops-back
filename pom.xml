@@ -76,7 +76,7 @@
 		<repository>
 			<id>deploymentRepo</id>
 			<name>Nexus Repository</name>
-			<url>http://192.168.109.129:8081/repository/maven-releases/</url>
+			<url>http ://local host:8081/repository/m aven -releases/</url>
 		</repository>
 	</distributionManagement>
 
