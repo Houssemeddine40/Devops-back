@@ -3,49 +3,41 @@ version: '3.8'
 services:
   # Service for the Spring Boot application
   tpachat-backend:
-    image: houssemeddine40/tpachatproject-app:98  # Use the pushed image
+    image: jasserchtourou/kaddem:1.0.0  # Use the built image
     ports:
       - "8089:8089"
     depends_on:
       mysql-db:
-        condition: service_healthy  # Wait for MySQL to be healthy
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tpachato?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
     networks:
-      - my-network  # Specify the network
+      - my-network
 
   # Service for the MySQL database
   mysql-db:
-    image: mysql:5.7  # Use MySQL 5.7
+    image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword  # Set MySQL root password
-      MYSQL_DATABASE: tpachato  # Database name
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tpachato
     ports:
-      - "3306:3306"  # Expose MySQL port
+      - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql  # Persist MySQL data
+      - mysql_data:/var/lib/mysql
     networks:
-      - my-network  # Specify the network
-    healthcheck:  # Add health check for MySQL
+      - my-network
+    healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
       interval: 5s
       timeout: 10s
       retries: 5
 
-  # Service for the Angular frontend application
-  angular-frontend:
-    image: houssemeddine40/angular-app:3
-    ports:
-      - "4200:80"  # Expose Angular app on port 4200 (maps to port 80 in the container where Nginx serves it)
-    depends_on:
-      - tpachat-backend  # Ensure the backend is running
-    networks:
-      - my-network
+
 
 volumes:
   mysql_data:
 
 networks:
-  my-network:  # Define the custom network
+  my-network:
