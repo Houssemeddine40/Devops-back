@@ -3,12 +3,11 @@ version: '3.8'
 services:
   # Service for the Spring Boot application
   tpachat-backend:
-    image: jasserchtourou/kaddem:0.0.1  # Use the built image
+    image: jasserchtourou/kaddem:0.0.1
     ports:
       - "8089:8089"
     depends_on:
-      mysql-db:
-        condition: service_healthy
+      - mysql-db
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tpachato?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
       SPRING_DATASOURCE_USERNAME: root
@@ -34,7 +33,25 @@ services:
       timeout: 10s
       retries: 5
 
+  # Prometheus service
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Bind mount the Prometheus config file
+    ports:
+      - "9090:9090"
+    networks:
+      - my-network
 
+  # Grafana service
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - my-network
+    depends_on:
+      - prometheus
 
 volumes:
   mysql_data:

@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'spring-application'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['tpachat-backend:8089']
+        labels:
+          __metrics_path__: '/SpringMVC/actuator/prometheus'

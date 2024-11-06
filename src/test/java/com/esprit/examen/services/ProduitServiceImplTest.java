@@ -108,26 +108,7 @@ import static org.mockito.Mockito.*;
             verify(produitRepository, times(1)).save(produit);
         }
 
-     /*-   @Test
-        void testAssignProduitToStock_WithNonExistentProduct() {
-            // Arrange
-            when(produitRepository.findById(produit.getIdProduit())).thenReturn(Optional.empty());
-            when(stockRepository.findById(stock.getIdStock())).thenReturn(Optional.of(stock));
 
-            try {
-                // Act
-                produitService.assignProduitToStock(produit.getIdProduit(), stock.getIdStock());
-            } catch (NullPointerException e) {
-                // Expected exception because produit is null
-                System.out.println("Caught expected NullPointerException: " + e.getMessage());
-            }
-
-            // Assert
-            verify(produitRepository, times(1)).findById(produit.getIdProduit());
-            verify(stockRepository, never()).findById(any());
-            verify(produitRepository, never()).save(any());
-        }
-*/
         @Test
         void testAssignProduitToStock_WithNonExistentStock() {
             // Arrange
