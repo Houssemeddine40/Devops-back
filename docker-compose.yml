@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Service for the Spring Boot application
   tpachat-backend:
-    image: jasserchtourou/tpAchatProject
+    image: jasserchtourou/tpAchatProject:1.0.0
     ports:
       - "8089:8089"
     depends_on:
