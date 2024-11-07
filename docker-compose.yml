@@ -33,25 +33,9 @@ services:
       timeout: 10s
       retries: 5
 
-  # Prometheus service
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Bind mount the Prometheus config file
-    ports:
-      - "9090:9090"
-    networks:
-      - my-network
 
-  # Grafana service
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - my-network
-    depends_on:
-      - prometheus
+
+
 
 volumes:
   mysql_data:
